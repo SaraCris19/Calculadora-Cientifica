@@ -1,13 +1,13 @@
 //crear las propiedades del objeto
 
 let p = {
-    teclas = document.querySelectorAll("#calculadora ul li"),
-    acion = null,
-    digito = null,
-    operacion = ddocument.querySelector("#operaciones"),
-    cantisimbolo = 0,
-    cantdecimal = false,
-    resultado = false
+    teclas: document.querySelectorAll("#calculadora ul li"),
+    accion: null,
+    digito: null,
+    operacion: document.querySelector("#operaciones"),
+    cantisimbolo: 0,
+    cantdecimal: false,
+    resultado: false
 }
 
 //creas los metodos
@@ -19,26 +19,50 @@ let m = {
         }         
     
     }, oprimirtecla: function (tecla) {
-        p.accion = tecla.target.getAttribute("class");
-        m.calcular(p.accion);
+        p.accion = tecla.currentTarget.getAttribute("class");
+         p.digito = tecla.currentTarget.innerHTML; 
+        m.calcular(p.accion, p.digito);
 
 
 
-    }, calcular: function(accion) {
+    }, calcular: function(accion, digito) {
         switch (accion) {
         case "numero":
-            console.log(" numero");
-            break;
+            //console.log(" numero");
+            if (p.operacion.innerHTML == "0") {
+                    p.operacion.innerHTML = digito;
+                } else {
+                    p.operacion.innerHTML += digito;
+                }         
+        break;
+
+
         case "simbolo":
             console.log("simbolo");
+            p.operacion.innerHTML += digito;
             break;
+
+
         case "decimal":
             console.log("decimal");
+             p.operacion.innerHTML += digito;
             break;
+
+
         case "igual":
             console.log("igual");
+                p.operacion.innerHTML = eval(p.operacion.innerHTML);
             break;
-        
-        }
+          }
+     },
+
+    
+    borrarCalculadora: function() {
+        p.operacion.innerHTML = "0";
     }
 }
+
+
+
+m.inicio();
+document.querySelector("#borrar").addEventListener("click", m.borrarCalculadora);
