@@ -41,14 +41,18 @@ let m = {
 
             case "simbolo":
                 if (digito == "√" || digito == "sen" || digito == "cos") {
-                    let valorActual = eval(p.operacion.innerHTML);
-                    p.operacion.innerHTML = Math.sqrt(valorActual);
+                    let valorActual = eval(p.operacion.innerHTML || "0");
+                    if (digito == "√") p.operacion.innerHTML = Math.sqrt(valorActual);
                     if (digito == "cos") p.operacion.innerHTML = Math.cos(valorActual * Math.PI / 180);
                     if (digito == "sen") p.operacion.innerHTML = Math.sin(valorActual * Math.PI / 180);
-                    p.resultado = true;
+                
                     p.resultado = true;
                     p.cantisimbolo = 0;
                     p.cantdecimal = false;
+                } else if (digito == "^") {
+                    p.operacion.innerHTML += "**";
+                    p.cantisimbolo++;
+                    p.resultado = false;
                 } else { 
                     p.cantisimbolo++;
                     if (p.cantisimbolo == 1) {
@@ -104,6 +108,7 @@ window.addEventListener("keydown", function(e) {
     if (e.key == "r" || e.key == "R") m.calcular("simbolo", "√"); 
     if (e.key == "s" || e.key == "S") m.calcular("simbolo", "sen");
     if (e.key == "c" || e.key == "C") m.calcular("simbolo", "cos");
+    if (e.key == "p" || e.key == "P") m.calcular("simbolo", "^");
     if (e.key == "." || e.key == ",") m.calcular("decimal", ".");
     if (e.key == "Enter") m.calcular("igual", "=");
     if (e.key == "Escape" || e.key == "Backspace") m.borrarCalculadora();
