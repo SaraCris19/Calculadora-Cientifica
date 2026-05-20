@@ -59,11 +59,17 @@ let m = {
                 break;
 
             case "igual":
+            if (p.operacion.innerHTML.includes("/0")) {
+                p.operacion.innerHTML = "Error: Division 0";
+                p.resultado = true;
+            } else {
                 p.operacion.innerHTML = eval(p.operacion.innerHTML);
                 p.resultado = true;
-                p.cantdecimal = false;
-                p.cantisimbolo = 0;
-                break;
+            }
+            p.cantdecimal = false;
+            p.cantisimbolo = 0;
+            break;
+          
         }
     },
 
